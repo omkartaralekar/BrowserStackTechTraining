@@ -11,10 +11,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
 
-public class PO_Search {
+public class AmazonProductDetailsSearchPage {
 	WebDriver driver;
 
-	public PO_Search(WebDriver driver) {
+	public AmazonProductDetailsSearchPage(WebDriver driver) {
 		this.driver = driver;
 	}
 	
@@ -36,7 +36,7 @@ public class PO_Search {
         return driver.findElement(By.xpath("//form[@autocomplete='on']//input[@type='text']"));
     }
 	public WebElement sortButton() {
-		return driver.findElement(By.xpath("//span[text()='Sort by:']"));
+		return driver.findElement(By.xpath("//span[@data-action='a-dropdown-button']"));
 	}
 
 
@@ -54,7 +54,7 @@ public class PO_Search {
         return driver.findElement(By.xpath("//div[text()='Omkar']"));
     }
 	
-	public WebElement priceHowToLow() {
+	public WebElement priceHighToLow() {
         return driver.findElement(By.xpath("//a[text()='Price: High to Low']"));
     }
 	

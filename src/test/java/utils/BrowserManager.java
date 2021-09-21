@@ -10,15 +10,21 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 
 public class BrowserManager {
-	public static WebDriver getDriver(String type, String url2) throws MalformedURLException {
-		WebDriver driver = null;
+	WebDriver  driver;
+
+
+	public  WebDriver getDriver(String browser) throws MalformedURLException {
 		final String USERNAME = "omkartaralekar_exYuMj";
 		final String AUTOMATE_KEY = "8chzwMYzg8eHf8LWQUdF";
 		final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
-		String url = "https://www.amazon.com/";
-		if (type.equalsIgnoreCase("chrome")) {
+
+		if (browser.equalsIgnoreCase("chrome")) {
 			System.out.println("Inside Chrome");
 			/*
 			 * System.setProperty("webdriver.chrome.driver",
@@ -28,23 +34,45 @@ public class BrowserManager {
 			System.out.println("Driver is setup");
 			
 			  DesiredCapabilities caps = new DesiredCapabilities();
-			  caps.setCapability("os", "Windows"); caps.setCapability("os_version", "10");
+			  caps.setCapability("os", "Windows");
+			  caps.setCapability("os_version", "10");
 			  caps.setCapability("browser", "Chrome");
 			  caps.setCapability("browser_version", "latest");
 			  caps.setCapability("browserstack.local", "false");
 			  caps.setCapability("browserstack.selenium_version", "3.14.0"); 
 			  driver= new RemoteWebDriver(new java.net.URL(URL),caps);
 			 
-		} else if (type.equalsIgnoreCase("firefox ")) {
-			driver = new FirefoxDriver();
-		} else if (type.equalsIgnoreCase("IE")) {
-			driver = new InternetExplorerDriver();
-		} else {
+		} else if (browser.equalsIgnoreCase("firefox")) {
+			DesiredCapabilities caps = new DesiredCapabilities();
+			caps.setCapability("os", "Windows");
+			caps.setCapability("os_version", "10");
+			caps.setCapability("browser", "Firefox");
+			caps.setCapability("browser_version", "latest");
+			caps.setCapability("browserstack.local", "false");
+			caps.setCapability("browserstack.selenium_version", "3.14.0");
+			driver= new RemoteWebDriver(new java.net.URL(URL),caps);
+		} else if (browser.equalsIgnoreCase("IE")) {
+			DesiredCapabilities caps = new DesiredCapabilities();
+			caps.setCapability("os", "Windows");
+			caps.setCapability("os_version", "10");
+			caps.setCapability("browser", "IE");
+			caps.setCapability("browser_version", "11.0");
+			caps.setCapability("browserstack.local", "false");
+			caps.setCapability("browserstack.selenium_version", "3.5.2");
+			driver= new RemoteWebDriver(new java.net.URL(URL),caps);
+		}else if (browser.equalsIgnoreCase("Safari")) {
+			DesiredCapabilities caps = new DesiredCapabilities();
+			caps.setCapability("os", "OS X");
+			caps.setCapability("os_version", "Big Sur");
+			caps.setCapability("browser", "Safari");
+			caps.setCapability("browser_version", "14.1");
+			caps.setCapability("browserstack.local", "false");
+			caps.setCapability("browserstack.selenium_version", "3.14.0");
+			driver= new RemoteWebDriver(new java.net.URL(URL),caps);
+		}
+		else {
 			Assert.assertTrue(false);
 		}
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		driver.get(url);
 		return driver;
 	}
 }
