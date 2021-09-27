@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Example test run" parallel="tests" thread-count="1">
-  <test name="Chrome Test">
+<suite name="Example test run" parallel="tests" thread-count="3">
+  <!--<test name="Chrome Test">
     <parameter name="browser" value="chrome"/>
     <classes>
       <class name="test.AmazonProductSearch"/>
@@ -24,6 +24,24 @@
     <parameter name="browser" value="chrome"/>
     <classes>
       <class name="test.BrowserStackInceptionTest"/>
+    </classes>
+  </test>-->
+  <test name="Google Pixel 3 test">
+    <parameter name="deviceName" value="google"/>
+    <classes>
+      <class name="test.WikipediaTest"/>
+    </classes>
+  </test>
+  <test name="Oneplus 7 test">
+    <parameter name="deviceName" value="oneplus"/>
+    <classes>
+      <class name="test.WikipediaTest"/>
+    </classes>
+  </test>
+  <test name="Samsung Galaxy S8 Plus">
+    <parameter name="deviceName" value="samsung"/>
+    <classes>
+      <class name="test.WikipediaTest"/>
     </classes>
   </test>
 </suite>

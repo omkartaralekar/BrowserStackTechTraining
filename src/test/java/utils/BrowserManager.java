@@ -16,10 +16,10 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 
 public class BrowserManager {
-	WebDriver  driver;
+	RemoteWebDriver  driver;
 
 
-	public  WebDriver getDriver(String browser) throws MalformedURLException {
+	public  RemoteWebDriver getDriver(String browser) throws MalformedURLException {
 		final String USERNAME = "omkartaralekar_exYuMj";
 		final String AUTOMATE_KEY = "8chzwMYzg8eHf8LWQUdF";
 		final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";

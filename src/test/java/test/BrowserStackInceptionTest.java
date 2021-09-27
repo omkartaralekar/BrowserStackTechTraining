@@ -5,6 +5,7 @@ import flows.BrowserStackAfterLoginFlow;
 import flows.BrowserStackLoginFlow;
 import flows.BrowserStackSearchFlow;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -14,7 +15,7 @@ import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
 public class BrowserStackInceptionTest {
-    private static WebDriver driver;
+    private static RemoteWebDriver driver;
     String url = "https://www.google.com/";
     @BeforeTest
     @Parameters("browser")
@@ -34,7 +35,6 @@ public class BrowserStackInceptionTest {
         browserStackLoginFlow.signIn();
         BrowserStackAfterLoginFlow browserStackAfterLoginFlow=new BrowserStackAfterLoginFlow(driver);
         browserStackAfterLoginFlow.liveInteraction();
-
         driver.quit();
     }
 }
