@@ -10,6 +10,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -20,12 +21,13 @@ public class DriverManager {
     AppiumDriver driver;
     private String sessionId;
     JSONObject deviceObj;
+
     public AppiumDriver initializeDriver(String deviceName) throws Exception {
         deviceObj = new JSONObject(Uttilities.parse("loginUsers.json").getJSONObject("validUser").toString());
-            String userName = deviceObj.getString("username");
-            String accessKey = deviceObj.getString("password");
+        String userName = deviceObj.getString("username");
+        String accessKey = deviceObj.getString("password");
         String buildName = System.getenv("BROWSERSTACK_BUILD_NAME");
-         deviceObj = new JSONObject(Uttilities.parse("Devices.json").getJSONObject(deviceName).toString());
+        deviceObj = new JSONObject(Uttilities.parse("Devices.json").getJSONObject(deviceName).toString());
         DesiredCapabilities caps = new DesiredCapabilities();
 
         caps.setCapability("device", deviceObj.getString("device"));
@@ -35,8 +37,8 @@ public class DriverManager {
         caps.setCapability("name", "Wikipedia Test Mobile");
         caps.setCapability("app", deviceObj.getString("app_url"));
 
-        URL url = new URL("https://"+userName+":"+accessKey+"@hub-cloud.browserstack.com/wd/hub");
-        switch (deviceName){
+        URL url = new URL("https://" + userName + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub");
+        switch (deviceName) {
             case "google":
                 driver = new AndroidDriver(url, caps);
                 break;
@@ -56,9 +58,9 @@ public class DriverManager {
     }
 
     public void statusMarkMethod(String sessionId) throws URISyntaxException, IOException {
-        this.sessionId=sessionId;
-    System.out.println("Inside Status"+sessionId);
-        URI uri = new URI("https://omkartaralekar_exYuMj:8chzwMYzg8eHf8LWQUdF@api.browserstack.com/app-automate/sessions/"+sessionId+".json");
+        this.sessionId = sessionId;
+        System.out.println("Inside Status" + sessionId);
+        URI uri = new URI("https://omkartaralekar_exYuMj:8chzwMYzg8eHf8LWQUdF@api.browserstack.com/app-automate/sessions/" + sessionId + ".json");
         HttpPut putRequest = new HttpPut(uri);
 
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();

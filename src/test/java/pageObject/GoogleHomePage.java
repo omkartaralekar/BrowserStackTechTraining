@@ -9,18 +9,19 @@ public class GoogleHomePage {
     WebDriver driver;
 
     public GoogleHomePage(WebDriver driver) {
-        this.driver=driver;
+        this.driver = driver;
     }
 
-    public WebElement googleSearchBox(){
+    public WebElement googleSearchBox() {
         return driver.findElement(By.xpath("//input[@title='Search']"));
     }
 
 
-    public WebElement googleSearchButton(){
+    public WebElement googleSearchButton() {
         return driver.findElement(By.xpath("(//input[@type='submit'])[1]"));
     }
-    public WebElement browserstackSignLink(){
+
+    public WebElement browserstackSignLink() {
         return driver.findElement(By.xpath("//a[contains(@href,'https://www.browserstack.com/users/sign_in')]"));
     }
 }
