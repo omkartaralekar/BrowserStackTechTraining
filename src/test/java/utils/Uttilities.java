@@ -30,10 +30,9 @@ import java.util.HashMap;
 
 public class Uttilities {
 
-
     String userName = ""; //BrowserStack UserName
     String accesskey = "";//BrowserStack AccessKey
-
+    Local bsLocal = new Local();
 
     public void localAppUpload() throws IOException, URISyntaxException {
         String urlS = "https://" + userName + ":" + accesskey + "@api.browserstack.com/app-automate/upload";
@@ -50,13 +49,10 @@ public class Uttilities {
         HttpEntity entity = response.getEntity();
         String responseString = EntityUtils.toString(entity, "UTF-8");
         System.out.println(responseString);
-
     }
 
     public void uploadAppFromURL() throws IOException {
-        String command = "curl -u \"omkart_kJ1gzD:GzgXZ5kgunjxMqUaqcNA\" \\\n" +
-                "-X POST \"https://api-cloud.browserstack.com/app-automate/upload\" \\\n" +
-                "-F \"url=https://www.browserstack.com/app-automate/sample-apps/android/WikipediaSample.apk\"\n";
+        String command = "curl -u \"omkart_kJ1gzD:GzgXZ5kgunjxMqUaqcNA\" -X POST \"https://api-cloud.browserstack.com/app-live/upload\" -F \"data={\\\"url\\\": \\\"https://www.browserstack.com/app-live/sample-apps/android/WikipediaSample.apk\\\"}\"\n";
         Process process = Runtime.getRuntime().exec(command);
     }
 
@@ -72,30 +68,37 @@ public class Uttilities {
         HttpClientBuilder.create().build().execute(putRequest);
     }
 
-    public void statusUpdateJS(boolean value, RemoteWebDriver driver){
-        JavascriptExecutor jse = (JavascriptExecutor)driver;
+    public void statusUpdateJS(boolean value, RemoteWebDriver driver) {
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
         if (value) {
-            jse.executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \"passed\", \"reason\": \"Title matched!\"}}");
-        }
-        else {
-            jse.executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\":\"failed\", \"reason\": \"Title not matched\"}}");
+            jse.executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \"passed\", \"reason\": \"Test passes!\"}}");
+        } else {
+            jse.executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\":\"failed\", \"reason\": \"Test Failed\"}}");
         }
     }
+
     public static JSONObject parse(String file) {
         InputStream is = Uttilities.class.getClassLoader().getResourceAsStream(file);
         assert is != null;
         return new JSONObject(new JSONTokener(is));
     }
 
-    public void bsLocal() throws Exception {
+    public void bsLocalStart() throws Exception {
         JSONObject deviceObj = new JSONObject(Uttilities.parse("loginUsers.json").getJSONObject("validUser").toString());
         accesskey = deviceObj.getString("password");
-        Local bsLocal = new Local();
         HashMap<String, String> bsLocalArgs = new HashMap<String, String>();
         bsLocalArgs.put("key", accesskey);
-        bsLocal.start(bsLocalArgs);
-        System.out.println(bsLocal.isRunning());
-        Thread.sleep(25000);
+        bsLocalArgs.put("localIdentifier","localConnection1");
+//        bsLocal.start(bsLocalArgs);
+        if (bsLocal.isRunning()) {
+            System.out.println(bsLocal.isRunning());
+        } else {
+            bsLocal.start(bsLocalArgs);
+        }
+        System.out.println("Inside local");
+    }
+
+    public void bsLocalStop() throws Exception {
         bsLocal.stop();
     }
 }

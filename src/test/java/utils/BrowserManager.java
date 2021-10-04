@@ -3,6 +3,7 @@ package utils;
 import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
+import org.json.JSONObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -17,13 +18,15 @@ import org.testng.annotations.Parameters;
 
 public class BrowserManager {
     RemoteWebDriver driver;
+    JSONObject deviceObj;
+    boolean local;
 
-
-    public RemoteWebDriver getDriver(String browser) throws MalformedURLException {
-        final String USERNAME = "omkart_kJ1gzD";
-        final String AUTOMATE_KEY = "GzgXZ5kgunjxMqUaqcNA";
+    public RemoteWebDriver getDriver(String browser,boolean local) throws MalformedURLException {
+        deviceObj = new JSONObject(Uttilities.parse("loginUsers.json").getJSONObject("validUser").toString());
+        String USERNAME = deviceObj.getString("username");
+        String AUTOMATE_KEY = deviceObj.getString("password");
         final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
-
+        this.local=local;
         if (browser.equalsIgnoreCase("chrome")) {
             System.out.println("Inside Chrome");
             /*
@@ -38,13 +41,14 @@ public class BrowserManager {
             caps.setCapability("os_version", "10");
             caps.setCapability("browser", "Chrome");
             caps.setCapability("browser_version", "latest");
-            caps.setCapability("browserstack.local", "false");
-            caps.setCapability("browserstack.console", "warnings");
-            caps.setCapability("browserstack.networkLogs", "true");
-            caps.setCapability("browserstack.geoLocation", "IN");
-            caps.setCapability("browserstack.selenium_version", "3.141.0");
-            caps.setCapability("browserstack.maskCommands", "setValues, getValues, setCookies, getCookies");
-
+//            caps.setCapability("browserstack.console", "warnings");
+//            caps.setCapability("browserstack.networkLogs", "true");
+//            caps.setCapability("browserstack.geoLocation", "IN");
+//            caps.setCapability("browserstack.selenium_version", "3.141.0");
+//            caps.setCapability("browserstack.maskCommands", "setValues, getValues, setCookies, getCookies");
+            if (local) {
+                caps.setCapability("browserstack.local", "true");
+            }
             driver = new RemoteWebDriver(new java.net.URL(URL), caps);
 
         } else if (browser.equalsIgnoreCase("firefox")) {
@@ -53,8 +57,9 @@ public class BrowserManager {
             caps.setCapability("os_version", "10");
             caps.setCapability("browser", "Firefox");
             caps.setCapability("browser_version", "latest");
-            caps.setCapability("browserstack.local", "false");
-            caps.setCapability("browserstack.selenium_version", "3.14.0");
+            if (local) {
+                caps.setCapability("browserstack.local", "true");
+            }
             driver = new RemoteWebDriver(new java.net.URL(URL), caps);
         } else if (browser.equalsIgnoreCase("IE")) {
             DesiredCapabilities caps = new DesiredCapabilities();
@@ -74,7 +79,7 @@ public class BrowserManager {
             caps.setCapability("browserstack.local", "false");
             caps.setCapability("browserstack.selenium_version", "3.14.0");
             driver = new RemoteWebDriver(new java.net.URL(URL), caps);
-        }else if (browser.equalsIgnoreCase("chrome samsung")) {
+        } else if (browser.equalsIgnoreCase("chrome samsung")) {
             DesiredCapabilities caps = new DesiredCapabilities();
             caps.setCapability("device", "Samsung Galaxy S20");
             caps.setCapability("os_version", "10.0");
@@ -82,8 +87,7 @@ public class BrowserManager {
             caps.setCapability("realMobile", "true");
             caps.setCapability("build", "browserstack-build-1");
             driver = new RemoteWebDriver(new java.net.URL(URL), caps);
-        }
-        else {
+        } else {
             Assert.assertTrue(false);
         }
         return driver;

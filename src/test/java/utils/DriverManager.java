@@ -35,8 +35,9 @@ public class DriverManager {
         caps.setCapability("project", "My First Project");
         caps.setCapability("build", buildName);
         caps.setCapability("name", "Wikipedia Test Mobile");
-        caps.setCapability("app", deviceObj.getString("app_url"));
-
+//        caps.setCapability("app", deviceObj.getString("app_url"));
+            caps.setCapability("browser", "firefox");
+        caps.setCapability("browser_version", "latest");
         URL url = new URL("https://" + userName + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub");
         switch (deviceName) {
             case "google":

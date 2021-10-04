@@ -24,7 +24,7 @@ public class AmazonProductSearch {
     @Parameters("browser")
     public void driverCreation(String browser) throws MalformedURLException {
         BrowserManager browserManager = new BrowserManager();
-        driver = browserManager.getDriver(browser);
+        driver = browserManager.getDriver(browser,false);
     }
 
     @Test

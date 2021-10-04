@@ -23,12 +23,11 @@ public class BrowserStackInceptionTest {
     @Parameters("browser")
     public void driverCreation(String browser) throws MalformedURLException {
         BrowserManager browserManager = new BrowserManager();
-        driver = browserManager.getDriver(browser);
+        driver = browserManager.getDriver(browser,false);
     }
 
     @Test
     public void t01search() throws MalformedURLException {
-//        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         driver.get(url);
         BrowserStackSearchFlow browserStackSearchFlow = new BrowserStackSearchFlow(driver);
