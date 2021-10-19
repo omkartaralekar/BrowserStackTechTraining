@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Example test run" parallel="tests" thread-count="3">
-    <!--<test name="Chrome Test">
+    <test name="Chrome Test">
       <parameter name="browser" value="chrome"/>
       <classes>
         <class name="test.AmazonProductSearch"/>
@@ -20,7 +20,7 @@
       </classes>
     </test>
 
-    <test name="Chrome test">
+   <!-- <test name="Chrome test">
       <parameter name="browser" value="chrome"/>
       <classes>
         <class name="test.BrowserStackInceptionTest"/>
@@ -44,13 +44,13 @@
             <class name="test.WikipediaTest"/>
         </classes>
     </test>-->
-    <test name="Firefox Test">
+    <!--<test name="Firefox Test">
         <parameter name="browser" value="firefox"/>
         <classes>
             <class name="test.JenkinsRunBuildTest"/>
         </classes>
     </test>
-    <!--<test name="Samsung Galaxy S8 Plus">
+    <test name="Samsung Galaxy S8 Plus">
         <parameter name="deviceName" value="samsung"/>
         <classes>
             <class name="test.LocalAppTest"/>
